@@ -14,13 +14,11 @@
     <table>
         <tr>
             <th>Item</th>
-            <th>Date Added</th>
             <th>Action</th>
         </tr>
         {% for list in lists %}
             <tr>
                 <td>{{list.content}}</td>
-                <td>{{list.date_created.date()}}</td>
                 <td>
                     <a href="/delete/{{list.id}}">Delete</a>
                     <br>

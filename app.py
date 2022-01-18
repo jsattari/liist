@@ -20,7 +20,7 @@ class Todo(db.Model):
     def __repr__(self):
         return f'<Lists {self.id}>'
 
-# page paths
+# main list
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
