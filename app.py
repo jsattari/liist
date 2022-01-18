@@ -39,5 +39,19 @@ def index():
         lists = Todo.query.order_by(Todo.date_created).all()
         return render_template("index.html", lists=lists)
 
+# delete function
+@app.route('/delete/<int:id>')
+def delete(id):
+    item_to_delte = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(item_to_delte)
+        db.session.commit()
+        return redirect('/')
+    
+    except:
+        return "Error: Unable to delete item from list"
+
+
 if __name__ == "__main__":
     app.run(debug=True)
