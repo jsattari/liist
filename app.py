@@ -42,15 +42,32 @@ def index():
 # delete function
 @app.route('/delete/<int:id>')
 def delete(id):
-    item_to_delte = Todo.query.get_or_404(id)
+    item_to_delete = Todo.query.get_or_404(id)
 
     try:
-        db.session.delete(item_to_delte)
+        db.session.delete(item_to_delete)
         db.session.commit()
         return redirect('/')
     
     except:
         return "Error: Unable to delete item from list"
+
+# update function
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    list = Todo.query.get_or_404(id)
+
+    if request.method == 'POST':
+        list.content = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect('/')
+        
+        except:
+            return "Error: Issue with updating your item"
+    else:
+        return render_template('update.html', list=list)
 
 
 if __name__ == "__main__":
