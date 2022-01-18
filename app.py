@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
-# 
+# db template
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True) # id column
     content = db.Column(db.String(500), nullable=False) # grocery list, 500 char max, can't be blank
