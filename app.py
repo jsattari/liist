@@ -1,9 +1,12 @@
 from asyncio import tasks
+from crypt import methods
 from distutils import text_file
-from urllib import request
-from flask import Flask, render_template, url_for, request, redirect
+from urllib import request, response
+from flask import Flask, render_template, url_for, request, redirect, send_file, make_response
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from io import StringIO
+import csv
 
 # app object
 app = Flask(__name__)
@@ -70,14 +73,5 @@ def update(id):
     else:
         return render_template('update.html', list=list)
 
-# download button
-@app.route('/')
-def download():
-    txt_file = open("Liist.txt", "w")
-    for row in Todo.query.all():
-        txt_file.write(row)
-    text_file.close()
-    return text_file
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
