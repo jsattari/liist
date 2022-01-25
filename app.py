@@ -74,4 +74,4 @@ def update(id):
         return render_template('update.html', list=list)
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
