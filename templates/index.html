@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Grocery List</title>
+<title>Liist</title>
 {% endblock %}
 
 {% block body %}
@@ -25,54 +25,56 @@
                 </td>
             </tr>
             {% endfor %}
-            <form action="/" method="POST">
-                <input type="text" name="content" id="content">
-                <input type="submit" value="Add Item">
-            </form>
-            <input type="button" id="btn" value="Download My Liist" />
-            <script>
-                function download(file, text) {
-    
-                    //creating an invisible element
-                    var element = document.createElement('a');
-                    element.setAttribute('href',
-                        'data:text/plain;charset=utf-8,'
-                        + encodeURIComponent(text));
-                    element.setAttribute('download', file);
-    
-                    document.body.appendChild(element);
-    
-                    //onClick property
-                    element.click();
-    
-                    document.body.removeChild(element);
-                }
-    
-                // Start file download.
-                document.getElementById("btn").addEventListener("click", function () {
-    
-                    // Generate download of hello.txt 
-                    // file with some content
-                    var nodes = document.querySelectorAll('tr > td:first-child');
-    
-                    // start of string where will append
-                    var text = 'Liist:\n\n';
-    
-                    // loop through each node value and get innerText
-                    for (var i = 0; i < nodes.length; i++) {
-    
-                        // get innerText and add line break
-                        text = text.concat(nodes[i].innerText + '\n');
-                    }
-    
-                    // filename variable
-                    var filename = "liist.txt";
-    
-                    // name file and fill with string
-                    download(filename, text);
-                }, false);
-            </script>
         </table>
         {% endif %}
+        <div class="btnHolder">
+        <form action="/" method="POST" style="text-align: center">
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Add Item">
+        </form>
+        <input type="button" id="btn" value="Download My Liist" />
+        <script>
+            function download(file, text) {
+
+                //creating an invisible element
+                var element = document.createElement('a');
+                element.setAttribute('href',
+                    'data:text/plain;charset=utf-8,'
+                    + encodeURIComponent(text));
+                element.setAttribute('download', file);
+
+                document.body.appendChild(element);
+
+                //onClick property
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+            // Start file download.
+            document.getElementById("btn").addEventListener("click", function () {
+
+                // Generate download of hello.txt 
+                // file with some content
+                var nodes = document.querySelectorAll('tr > td:first-child');
+
+                // start of string where will append
+                var text = 'Liist:\n\n';
+
+                // loop through each node value and get innerText
+                for (var i = 0; i < nodes.length; i++) {
+
+                    // get innerText and add line break
+                    text = text.concat(nodes[i].innerText + '\n');
+                }
+
+                // filename variable
+                var filename = "liist.txt";
+
+                // name file and fill with string
+                download(filename, text);
+            }, false);
+        </script>
+        </div>
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 h1 {
-    font-size: 30px;
+    font-size: 5vw;
     color: #fff;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-weight: 300;
     text-align: center;
     margin-bottom: 15px;
@@ -26,26 +26,32 @@ table {
 }
 
 th {
-    padding: 20px 15px;
-    text-align: left;
+    margin: auto;
+    text-align: center;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 2vw;
     color: #fff;
     text-transform: uppercase;
 }
 
 td {
+    margin: auto;
     padding: 15px;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 1.3vw;
     color: #fff;
-    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
 }
 
-
-/* demo styles */
+.btnHolder {
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -55,50 +61,18 @@ body {
     font-family: 'Roboto', sans-serif;*/
 }
 
-section {
-    margin: 50px;
-}
-
-
-/* follow me template */
-.made-with-love {
-    margin-top: 40px;
-    padding: 10px;
-    clear: left;
-    text-align: center;
-    font-size: 10px;
-    font-family: arial;
-    color: #fff;
-}
-
-.made-with-love i {
-    font-style: normal;
-    color: #F50057;
-    font-size: 14px;
-    position: relative;
-    top: 2px;
-}
-
-.made-with-love a {
-    color: #fff;
+/*input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
     text-decoration: none;
+    cursor: pointer;
+    margin: 2px 2px;
 }
 
-.made-with-love a:hover {
-    text-decoration: underline;
-}
-
-
-/* for custom scrollbar for webkit browser*/
-
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}*/
