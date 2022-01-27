@@ -2,18 +2,26 @@ from asyncio import tasks
 from crypt import methods
 from distutils import text_file
 from urllib import request, response
-from flask import Flask, render_template, url_for, request, redirect, send_file, make_response
+from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from io import StringIO
-import csv
+from flask_sessionstore import Session
 
 # app object
 app = Flask(__name__)
 
 # db uri config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+#### added for creating a unique session
+app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['SESSION_SQLALCHEMY_TABLE'] = 'sessions'
+
 db = SQLAlchemy(app)
+session = Session(app)
+session.app.session_interface.db.create_all()
+####
 
 # db template
 class Todo(db.Model):
