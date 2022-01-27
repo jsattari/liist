@@ -24,6 +24,11 @@ class Todo(db.Model):
     def __repr__(self):
         return f'<Lists {self.id}>'
 
+# solution for heroku 500 Internal Error: https://stackoverflow.com/a/69814221
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 # main list
 @app.route('/', methods=['POST', 'GET'])
 def index():
