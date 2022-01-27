@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Grocery List</title>
+<title>Liist</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Grocery List</h1>
+    <h1 style="text-align: center">My Liist</h1>
     {% if lists|length < 1 %} <h4 style="text-align: center">No items have been added to the list. Add one below!</h4>
         {% else %}
 
@@ -27,11 +27,12 @@
             {% endfor %}
         </table>
         {% endif %}
-        <form action="/" method="POST">
+        <div class="btnHolder">
+        <form action="/" method="POST" style="text-align: center">
             <input type="text" name="content" id="content">
-            <input type="submit" value="Add Item">
+            <button type="submit" value="Add Item" class="add-btn">Add Item</button>
         </form>
-        <input type="button" id="btn" value="Download My Liist" />
+        <button type="button" id="btn" value="Download My Liist" class="download-btn">Download My Liist</button>
         <script>
             function download(file, text) {
 
@@ -74,5 +75,6 @@
                 download(filename, text);
             }, false);
         </script>
+        </div>
 </div>
 {% endblock %}
