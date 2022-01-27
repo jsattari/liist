@@ -1,5 +1,5 @@
 h1 {
-    font-size: 5vw;
+    font-size: 5vh;
     color: #fff;
     text-transform: capitalize;
     font-weight: 300;
@@ -29,7 +29,7 @@ th {
     margin: auto;
     text-align: center;
     font-weight: 500;
-    font-size: 2vw;
+    font-size: 2.5vh;
     color: #fff;
     text-transform: uppercase;
 }
@@ -39,10 +39,10 @@ td {
     padding: 15px;
     text-align: center;
     vertical-align: middle;
-    font-weight: 300;
-    font-size: 1.3vw;
+    font-weight: 800;
+    font-size: 1.75vh;
     color: #fff;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+    border-bottom: solid 3px rgba(0, 0, 0, 0.1);
 }
 
 .btnHolder {
@@ -50,6 +50,10 @@ td {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
+    padding: 10px;
+}
+
+form {
     padding: 10px;
 }
 
@@ -69,10 +73,78 @@ body {
     text-decoration: none;
     cursor: pointer;
     margin: 2px 2px;
+} */
+
+.download-btn {
+    width: 220px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
 }
 
-.content {
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
-}*/
+.download-btn:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.download-btn:active {
+    color: #000
+}
+
+.download-btn:active:after {
+    background: transparent;
+}
+
+.download-btn:hover:before {
+    opacity: 1;
+}
+
+.download-btn:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.add-btn {
+    width: 120px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #000000;
+    background: #acaeb3;
+    cursor: crosshair;
+    position: relative;
+    z-index: 0;
+    border-radius: 5px;
+    border-color: #000000;
+}
