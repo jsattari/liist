@@ -6,7 +6,6 @@
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">My Liist</h1>
     {% if lists|length < 1 %} <h4 style="text-align: center">No items have been added to the list. Add one below!</h4>
         {% else %}
 
@@ -28,53 +27,53 @@
         </table>
         {% endif %}
         <div class="btnHolder">
-        <form action="/" method="POST" style="text-align: center">
-            <input type="text" name="content" id="content">
-            <button type="submit" value="Add Item" class="add-btn">Add Item</button>
-        </form>
-        <button type="button" id="btn" value="Download My Liist" class="download-btn">Download My Liist</button>
-        <script>
-            function download(file, text) {
+            <form action="/" method="POST" style="text-align: center">
+                <input type="text" name="content" id="content">
+                <button type="submit" value="Add Item" class="add-btn">Add Item</button>
+            </form>
+            <button type="button" id="btn" value="Download My Liist" class="download-btn">Download My Liist</button>
+            <script>
+                function download(file, text) {
 
-                //creating an invisible element
-                var element = document.createElement('a');
-                element.setAttribute('href',
-                    'data:text/plain;charset=utf-8,'
-                    + encodeURIComponent(text));
-                element.setAttribute('download', file);
+                    //creating an invisible element
+                    var element = document.createElement('a');
+                    element.setAttribute('href',
+                        'data:text/plain;charset=utf-8,'
+                        + encodeURIComponent(text));
+                    element.setAttribute('download', file);
 
-                document.body.appendChild(element);
+                    document.body.appendChild(element);
 
-                //onClick property
-                element.click();
+                    //onClick property
+                    element.click();
 
-                document.body.removeChild(element);
-            }
-
-            // Start file download.
-            document.getElementById("btn").addEventListener("click", function () {
-
-                // Generate download of hello.txt 
-                // file with some content
-                var nodes = document.querySelectorAll('tr > td:first-child');
-
-                // start of string where will append
-                var text = 'Liist:\n\n';
-
-                // loop through each node value and get innerText
-                for (var i = 0; i < nodes.length; i++) {
-
-                    // get innerText and add line break
-                    text = text.concat(nodes[i].innerText + '\n');
+                    document.body.removeChild(element);
                 }
 
-                // filename variable
-                var filename = "liist.txt";
+                // Start file download.
+                document.getElementById("btn").addEventListener("click", function () {
 
-                // name file and fill with string
-                download(filename, text);
-            }, false);
-        </script>
+                    // Generate download of hello.txt
+                    // file with some content
+                    var nodes = document.querySelectorAll('tr > td:first-child');
+
+                    // start of string where will append
+                    var text = 'Liist:\n\n';
+
+                    // loop through each node value and get innerText
+                    for (var i = 0; i < nodes.length; i++) {
+
+                        // get innerText and add line break
+                        text = text.concat(nodes[i].innerText + '\n');
+                    }
+
+                    // filename variable
+                    var filename = "liist.txt";
+
+                    // name file and fill with string
+                    download(filename, text);
+                }, false);
+            </script>
         </div>
 </div>
 {% endblock %}
