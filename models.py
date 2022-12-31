@@ -15,7 +15,8 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)  # id column
     email = db.Column(db.String(50), unique=True, nullable=False)  # noqa: E501
-    password_hash = db.Column(db.String(128), nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)  # noqa: E501
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -29,7 +30,7 @@ class Grocery(db.Model):
     __tablename__ = "grocerylist"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)  # id column
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))  # noqa: E501
+    username = db.Column(db.String, db.ForeignKey("users.username"))  # noqa: E501
     item = db.Column(
         db.String(16), nullable=False
     )  # grocery list, 500 char max, can't be blank
