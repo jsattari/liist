@@ -14,7 +14,7 @@ from sqlalchemy.exc import (
 from werkzeug.routing import BuildError
 
 
-from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_bcrypt import check_password_hash
 
 from flask_login import (
     login_user,
@@ -22,7 +22,7 @@ from flask_login import (
     login_required,
 )
 
-from app import create_app, db, login_mgr
+from app import create_app, db, login_mgr, bcrypt
 from models import User, Grocery
 from forms import LoginForm, NewUserForm
 
@@ -35,7 +35,7 @@ def load_user(user_id):
 app = create_app()
 
 
-@app.before_first_request
+@app.before_request
 def session_handler():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=120)
@@ -58,7 +58,12 @@ def index():
 
     else:
         lists = Grocery.query.order_by(Grocery.date_updated).all()
-        return render_template("index.html", lists=lists)
+        return render_template("login.html", lists=lists, title="myLiist")
+
+
+""" @app.route("/", methods=["POST", "GET"], strict_slashes=False)
+def index():
+    return render_template("login.html", title="Home") """
 
 
 # login function
@@ -69,7 +74,7 @@ def login():
     if form.validate_on_submit():
         try:
             user = User.query.filter_by(email=form.email.data).first()
-            if check_password_hash(user.password, form.password.data):
+            if check_password_hash(user.password_hash, form.password.data):
                 login_user(user)
                 return redirect(url_for("index"))
             else:
@@ -83,17 +88,19 @@ def login():
 
 
 # register function
-@app.route("/register/", methods=("GET", "POST"), strict_slashes=False)
+@app.route("/register/", methods=["GET", "POST"], strict_slashes=False)
 def register():
     form = NewUserForm()
     if form.validate_on_submit():
         try:
             email = form.email.data
-            password = form.password.data
+            username = form.username.data
+            pw = form.password.data
 
             newuser = User(
                 email=email,
-                password=generate_password_hash(password),
+                username=username,
+                password_hash=bcrypt.generate_password_hash(pw).decode("utf8"),
             )
 
             db.session.add(newuser)
@@ -106,7 +113,7 @@ def register():
             flash("Something went wrong!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash("User already exists!.", "warning")
+            flash("Email or Username already exists!.", "warning")
         except DataError:
             db.session.rollback()
             flash("Invalid Entry", "warning")
@@ -122,9 +129,8 @@ def register():
     return render_template(
         "auth.html",
         form=form,
-        text="Create account",
-        title="Register",
-        btn_action="Register account",
+        title="Register For Liist!",
+        btn_action="Create account",
     )
 
 
