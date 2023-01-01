@@ -1,79 +1,94 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title%} {{ title }} {% endblock %}
+{% block content%}
 
-{% block head %}
-<title>Liist</title>
-{% endblock %}
+<div class="container py-4 text-center">
 
-{% block body %}
-<div class="content">
-    {% if lists|length < 1 %} <h4 style="text-align: center">No items have been added to the list. Add one below!</h4>
-        {% else %}
+    {% if current_user.is_authenticated %}
 
-        <table>
-            <tr>
-                <th>Item</th>
-                <th>Action</th>
-            </tr>
-            {% for list in lists %}
-            <tr>
-                <td>{{list.content}}</td>
-                <td>
-                    <a href="/delete/{{list.id}}">Delete</a>
-                    <br>
-                    <a href="/update/{{list.id}}">Update</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
-        <div class="btnHolder">
-            <form action="/" method="POST" style="text-align: center">
-                <input type="text" name="content" id="content">
-                <button type="submit" value="Add Item" class="add-btn">Add Item</button>
-            </form>
-            <button type="button" id="btn" value="Download My Liist" class="download-btn">Download My Liist</button>
-            <script>
-                function download(file, text) {
+    <h1>{{ current_user.username }}'s Liist</h1>
 
-                    //creating an invisible element
-                    var element = document.createElement('a');
-                    element.setAttribute('href',
-                        'data:text/plain;charset=utf-8,'
-                        + encodeURIComponent(text));
-                    element.setAttribute('download', file);
+    {% block body %}
+    <div class="content">
+        {% if lists|length < 1 %} <h4 style="text-align: center">No items have been added to the list. Add one below!
+            </h4>
+            {% else %}
 
-                    document.body.appendChild(element);
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Action</th>
+                </tr>
+                {% for list in lists %}
+                <tr>
+                    <td>{{list.item}}</td>
+                    <td>
+                        <a href="/delete/{{list.id}}">Delete</a>
+                        <br>
+                        <a href="/update/{{list.id}}">Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+            <div class="btnHolder">
+                <form action="/" method="POST" style="text-align: center">
+                    <input type="text" name="content" id="content">
+                    <input type="hidden" name="username" value="{{ current_user.username }}">
+                    <button type="submit" value="Add Item" class="add-btn">Add Item</button>
+                </form>
+                <button type="button" id="btn" value="Download My Liist" class="download-btn">Download My Liist</button>
+                <script>
+                    function download(file, text) {
 
-                    //onClick property
-                    element.click();
+                        //creating an invisible element
+                        var element = document.createElement('a');
+                        element.setAttribute('href',
+                            'data:text/plain;charset=utf-8,'
+                            + encodeURIComponent(text));
+                        element.setAttribute('download', file);
 
-                    document.body.removeChild(element);
-                }
+                        document.body.appendChild(element);
 
-                // Start file download.
-                document.getElementById("btn").addEventListener("click", function () {
+                        //onClick property
+                        element.click();
 
-                    // Generate download of hello.txt
-                    // file with some content
-                    var nodes = document.querySelectorAll('tr > td:first-child');
-
-                    // start of string where will append
-                    var text = 'Liist:\n\n';
-
-                    // loop through each node value and get innerText
-                    for (var i = 0; i < nodes.length; i++) {
-
-                        // get innerText and add line break
-                        text = text.concat(nodes[i].innerText + '\n');
+                        document.body.removeChild(element);
                     }
 
-                    // filename variable
-                    var filename = "liist.txt";
+                    // Start file download.
+                    document.getElementById("btn").addEventListener("click", function () {
 
-                    // name file and fill with string
-                    download(filename, text);
-                }, false);
-            </script>
-        </div>
+                        // Generate download of hello.txt
+                        // file with some content
+                        var nodes = document.querySelectorAll('tr > td:first-child');
+
+                        // start of string where will append
+                        var text = 'Liist:\n\n';
+
+                        // loop through each node value and get innerText
+                        for (var i = 0; i < nodes.length; i++) {
+
+                            // get innerText and add line break
+                            text = text.concat(nodes[i].innerText + '\n');
+                        }
+
+                        // filename variable
+                        var filename = "liist.txt";
+
+                        // name file and fill with string
+                        download(filename, text);
+                    }, false);
+                </script>
+            </div>
+    </div>
+    {% endblock %}
+    <a href="{{url_for('logout')}}">Logout</a>
+
+    {% else %}
+    <!-- go to login page -->
+    <a href="{{url_for('login')}}">Sign In/Sign Up</a>
+
+    {% endif %}
 </div>
 {% endblock %}
