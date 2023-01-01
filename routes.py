@@ -41,12 +41,12 @@ def session_handler():
     app.permanent_session_lifetime = timedelta(minutes=120)
 
 
-# main list
+# homepage
 @app.route("/", methods=["GET", "POST"])
 def index():
+    username = session.get("username", None)
     if request.method == "POST":
         item = request.form["content"]
-        username = request.form["username"]
         new_list = Grocery(item=item, username=username)
 
         try:
@@ -58,7 +58,11 @@ def index():
             return "Unable to updated grocery list, try again!"
 
     else:
-        lists = Grocery.query.order_by(Grocery.date_updated).all()
+        lists = (
+            Grocery.query.filter_by(username=username)
+            .order_by(Grocery.date_updated)
+            .all()
+        )
         return render_template("index.html", lists=lists, title="myLiist")
 
 
@@ -72,6 +76,7 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.password_hash, form.password.data):
                 login_user(user)
+                session["username"] = user.username
                 return redirect(url_for("index"))
             else:
                 flash("Invalid Username or Password!!!", "danger")
