@@ -25,11 +25,12 @@ from flask_login import (
 from app import create_app, db, login_mgr, bcrypt
 from models import User, Grocery
 from forms import LoginForm, NewUserForm
+import uuid
 
 
 @login_mgr.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 
 app = create_app()
@@ -44,10 +45,10 @@ def session_handler():
 # homepage
 @app.route("/", methods=["GET", "POST"])
 def index():
-    username = session.get("username", None)
+    unique_id = session.get("unique_id", None)
     if request.method == "POST":
         item = request.form["content"]
-        new_list = Grocery(item=item, username=username)
+        new_list = Grocery(item=item, user_id=unique_id)
 
         try:
             db.session.add(new_list)
@@ -59,7 +60,7 @@ def index():
 
     else:
         lists = (
-            Grocery.query.filter_by(username=username)
+            Grocery.query.filter_by(user_id=unique_id)
             .order_by(Grocery.date_updated)
             .all()
         )
@@ -76,7 +77,7 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.password_hash, form.password.data):
                 login_user(user)
-                session["username"] = user.username
+                session["unique_id"] = user.id
                 return redirect(url_for("index"))
             else:
                 flash("Invalid Username or Password!!!", "danger")
@@ -98,6 +99,7 @@ def register():
             pw = form.password.data
 
             newuser = User(
+                id=uuid.uuid4(),
                 email=email,
                 username=username,
                 password_hash=bcrypt.generate_password_hash(pw).decode("utf8"),
