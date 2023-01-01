@@ -45,8 +45,9 @@ def session_handler():
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        grocery_list = request.form["content"]
-        new_list = Grocery(content=grocery_list)
+        item = request.form["content"]
+        username = request.form["username"]
+        new_list = Grocery(item=item, username=username)
 
         try:
             db.session.add(new_list)
@@ -58,12 +59,7 @@ def index():
 
     else:
         lists = Grocery.query.order_by(Grocery.date_updated).all()
-        return render_template("login.html", lists=lists, title="myLiist")
-
-
-""" @app.route("/", methods=["POST", "GET"], strict_slashes=False)
-def index():
-    return render_template("login.html", title="Home") """
+        return render_template("index.html", lists=lists, title="myLiist")
 
 
 # login function
@@ -81,7 +77,6 @@ def login():
                 flash("Invalid Username or Password!!!", "danger")
         except Exception as e:
             flash(e, "danger")
-
     return render_template(
         "auth.html", form=form, text="Login", title="Login", btn_action="Login"
     )
