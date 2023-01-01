@@ -5,11 +5,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from dotenv import load_dotenv
 import os
-
-# load env file
-load_dotenv(os.path.abspath(os.getcwd()) + "/.env")
 
 DB_URI = os.getenv("DB_URI")
 
