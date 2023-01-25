@@ -236,7 +236,6 @@ def update(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
     import logging
 
     logging.basicConfig(
@@ -250,3 +249,6 @@ if __name__ == "__main__":
     logger = logging.getLogger()
 
     logger.addHandler(console_handler)
+
+    # run app
+    app.run(debug=True)
