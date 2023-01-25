@@ -236,4 +236,19 @@ def update(id):
 
 
 if __name__ == "__main__":
+    import logging
+
+    logging.basicConfig(
+        format="%(asctime)s [%(threadName)-12.12s] \
+            [%(levelname)-5.5s]  %(message)s",
+        level=logging.DEBUG,
+    )
+
+    console_handler = logging.StreamHandler()
+
+    logger = logging.getLogger()
+
+    logger.addHandler(console_handler)
+
+    # run app
     app.run(debug=True)
